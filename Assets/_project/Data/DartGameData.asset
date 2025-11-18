@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49aa9bb0edb071044862e8724fdcd204, type: 3}
+  m_Name: DartGameData
+  m_EditorClassIdentifier: 
+  LevelDatas:
+  - TotalBallons: 30
+    ValidBallons: 25
+    BalloonsToPop: 5
+    Frequency: 37.28
+    Chance: 2.68
+  - TotalBallons: 25
+    ValidBallons: 20
+    BalloonsToPop: 4
+    Frequency: 38.3
+    Chance: 2.61
+  - TotalBallons: 21
+    ValidBallons: 16
+    BalloonsToPop: 3
+    Frequency: 42.11
+    Chance: 2.38
+  - TotalBallons: 18
+    ValidBallons: 13
+    BalloonsToPop: 3
+    Frequency: 35.05
+    Chance: 2.85
+  - TotalBallons: 15
+    ValidBallons: 10
+    BalloonsToPop: 3
+    Frequency: 26.37
+    Chance: 3.79
+  MultiplierData: {fileID: 11400000, guid: 633cc743085a3da429eda572fbe3670b, type: 2}

@@ -1,0 +1,211 @@
+using NUnit.Framework.Constraints;
+using System.Collections;
+using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+
+public class DartGameManager : MonoBehaviour
+{
+    #region Attributes
+    [SerializeField] private DartInputManager m_dartInputManager;
+    [SerializeField] private BalloonManager m_balloonManager;
+    [SerializeField] private DartMultiplerManager m_multiplierManager;
+    [SerializeField] private DartGameUIManager m_uiManager;
+
+    [Space]
+    [SerializeField] private PlayerArm m_playerArm;
+
+    [Space]
+    [SerializeField] private DartGameData m_gameData;
+
+    [SerializeField] private GameObject m_megaBalloon;
+
+    //[SerializeField] private TextMeshProUGUI _tmpText;
+
+    [SerializeField] private CameraController m_cameraController;
+
+    private int m_currentLevel = -1;
+    private int m_dartsThrown = 0;
+    private int m_maxBallonsToPop = 0;
+
+    private float m_bet = 10;
+    private float m_multiplier = 1f;
+    #endregion
+
+    #region Events
+    private UnityEvent OnLevelComplete = new UnityEvent();
+    private UnityEvent<bool> OnGameOver = new UnityEvent<bool>();
+    #endregion
+
+    #region Methods
+    private void Start()
+    {
+        Init();
+    }
+
+    private void Init()
+    {
+        m_balloonManager.OnBalloonExploded.AddListener(OnBalloonExplodedCallback);
+        m_dartInputManager.OnBalloonTouched.AddListener(OnBalloonTouchedCallback);
+
+        m_multiplierManager.OnMultiplierSelected.AddListener(OnMultiplierSelectedCallback);
+        m_uiManager.OnGameUIShown.AddListener((isFromTuto) =>
+        {
+            //m_dartInputManager.EnableInput = true;
+            StartNextLevel();
+        });
+        m_uiManager.OnTutorialShown.AddListener(() =>
+        {
+            m_cameraController.SwitchToDartGameplay();
+        });
+        m_playerArm.OnThrowComplete.AddListener(m_balloonManager.ExplodeBalloon);
+
+        m_balloonManager.InitBalloons(5);
+        m_megaBalloon.SetActive(false);
+
+        StartMainMenu();
+        //StartLevel(m_currentLevel);
+    }
+
+    private void OnBalloonExplodedCallback(bool success)
+    {
+        if (success)
+        {
+            Debug.LogFormat("Darts Thrown: {0} / {1}", m_dartsThrown + 1, m_maxBallonsToPop);
+            ++m_dartsThrown;
+            if (m_dartsThrown >= m_maxBallonsToPop)
+            {
+                LevelComplete();
+            }
+            else
+            {
+                m_dartInputManager.EnableInput = true;
+            }    
+        }
+        else
+        {
+            GameOver(false);
+            Debug.LogError("A trapped balloon was popped! Game Over.");
+        }
+    }
+    private void OnBalloonTouchedCallback(Balloon balloon)
+    {
+        m_uiManager.GameplayPanel.OnDartThrown(m_maxBallonsToPop - m_dartsThrown - 1);
+
+        m_playerArm.PlayThrowAnimation(balloon.transform);
+        //m_balloonManager.ExplodeBalloon(balloon);
+    }
+    private void OnMultiplierSelectedCallback(float value)
+    {
+        m_multiplier = value;
+        m_bet *= m_multiplier;
+
+        if (m_currentLevel+1 >= m_gameData.LevelsCount)
+        {
+            SceneManager.LoadScene("Main");
+        }
+        else
+        {
+            m_cameraController.SwitchToDartGameplay();
+
+            // Show "Options" Panel
+            //m_uiManager.SetTexts(m_bet, m_gameData.LevelDatas[m_currentLevel].Chance,
+            //    m_gameData.MultiplierData.GetMinMultiplier(m_currentLevel),
+            //    m_gameData.MultiplierData.GetMaxMultiplier(m_currentLevel));
+
+
+            // go back to gameplay
+            //    StartLevel(m_currentLevel);
+
+            // show continue panel
+            ShowContinuePanel();
+        }
+    }
+    private void GameOver(bool success)
+    {
+        OnGameOver.Invoke(success);
+        // show game over UI, stop input, etc.
+        //if (!success)
+        //{
+        //    SceneManager.LoadScene("SampleScene");
+
+        //}
+        //else
+        //{
+        //    SceneManager.LoadScene("SampleScene");
+        //}
+
+        m_uiManager.ShowFailPanel();
+
+        //StartCoroutine(GameOverCoroutine());
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene("SampleScene");
+
+    }
+    private void LevelComplete()
+    {
+        OnLevelComplete.Invoke();
+
+        //++m_currentLevel;k
+
+        Debug.LogFormat("Current Level = {0} Max Level  = {1}", m_currentLevel, m_gameData.LevelsCount);
+
+        StartMultiplierPhase();
+    }
+
+    private void StartMainMenu()
+    {
+        m_cameraController.SwitchToMainMenu();
+        m_uiManager.ShowMainMenu();
+    }
+
+    private void StartMultiplierPhase()
+    {
+        m_dartInputManager.EnableInput = false;
+
+        m_uiManager.ShowSuccessPanel(m_currentLevel + 1, () =>
+        {
+            if (m_currentLevel + 1 == m_gameData.LevelsCount)
+            {
+                // mega ballon 
+                m_uiManager.ShowMegaballonPanel();
+                m_megaBalloon.SetActive(true);
+                m_multiplierManager.StartMultiplierScene(m_gameData.MultiplierData, true, m_currentLevel);
+            }
+            else
+            {
+                m_multiplierManager.StartMultiplierScene(m_gameData.MultiplierData, true, m_currentLevel);
+                m_uiManager.ShowMultiplierPanel();
+                m_cameraController.SwitchToDartPlushies();
+            }
+        });
+    }
+    private void StartNextLevel()
+    {
+        ++m_currentLevel;
+        m_dartInputManager.EnableInput = true;
+
+        m_dartsThrown = 0;
+        m_maxBallonsToPop = m_gameData.GetBalloonsToPop(m_currentLevel);
+        m_cameraController.SwitchToDartGameplay();
+
+        // tmp
+        m_uiManager.GameplayPanel.OnNewLevelStarted(m_currentLevel + 1, m_maxBallonsToPop);
+    }
+    #endregion
+
+    private void ShowContinuePanel()
+    {
+        m_uiManager.SetTexts(m_bet, m_gameData.LevelDatas[m_currentLevel].Chance,
+m_gameData.MultiplierData.GetMinMultiplier(m_currentLevel),
+m_gameData.MultiplierData.GetMaxMultiplier(m_currentLevel));
+
+        m_uiManager.ShowContinuePanel();
+    }
+}

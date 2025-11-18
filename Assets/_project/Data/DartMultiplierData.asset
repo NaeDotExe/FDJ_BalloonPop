@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76d4d5ce8df71a9468a64249bda89273, type: 3}
+  m_Name: DartMultiplierData
+  m_EditorClassIdentifier: 
+  m_levels:
+  - m_pathData:
+    - Probability: 49.55
+      Multipliers:
+      - Probability: 10.05
+        Value: 1.5
+      - Probability: 10.06
+        Value: 2
+      - Probability: 86.32
+        Value: 3
+    - Probability: 50.45
+      Multipliers:
+      - Probability: 10.05
+        Value: 1.5
+      - Probability: 51.57
+        Value: 2
+      - Probability: 41.51
+        Value: 3
+  - m_pathData:
+    - Probability: 39
+      Multipliers:
+      - Probability: 30
+        Value: 1.5
+      - Probability: 20
+        Value: 2
+      - Probability: 30
+        Value: 3
+      - Probability: 20
+        Value: 4
+    - Probability: 61
+      Multipliers:
+      - Probability: 30
+        Value: 1.5
+      - Probability: 20
+        Value: 2
+      - Probability: 20
+        Value: 3
+      - Probability: 30
+        Value: 4
+  - m_pathData:
+    - Probability: 50
+      Multipliers:
+      - Probability: 40
+        Value: 1.5
+      - Probability: 30
+        Value: 2
+      - Probability: 20
+        Value: 3
+      - Probability: 10
+        Value: 5
+    - Probability: 50
+      Multipliers:
+      - Probability: 30
+        Value: 1.5
+      - Probability: 30
+        Value: 2
+      - Probability: 30
+        Value: 3
+      - Probability: 10
+        Value: 5
+  - m_pathData:
+    - Probability: 46.75
+      Multipliers:
+      - Probability: 20
+        Value: 1.5
+      - Probability: 30
+        Value: 2
+      - Probability: 20
+        Value: 3
+      - Probability: 20
+        Value: 4
+      - Probability: 10
+        Value: 5
+    - Probability: 53.25
+      Multipliers:
+      - Probability: 20
+        Value: 1.5
+      - Probability: 30
+        Value: 2
+      - Probability: 20
+        Value: 3
+      - Probability: 10
+        Value: 4
+      - Probability: 20
+        Value: 5
+  - m_pathData:
+    - Probability: 12.33
+      Multipliers:
+      - Probability: 100
+        Value: 1.5
+    - Probability: 30
+      Multipliers:
+      - Probability: 100
+        Value: 2
+    - Probability: 30
+      Multipliers:
+      - Probability: 100
+        Value: 3
+    - Probability: 15.17
+      Multipliers:
+      - Probability: 100
+        Value: 4
+    - Probability: 10
+      Multipliers:
+      - Probability: 100
+        Value: 5
+    - Probability: 2.5
+      Multipliers:
+      - Probability: 100
+        Value: 40
