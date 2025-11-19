@@ -67,6 +67,10 @@ public class DartGameUIManager : MonoBehaviour
     {
         m_gameplayPanel.ShowSuccessPanel(lvl, () => callback?.Invoke());
     }
+    public void HidePlushiePanel()
+    {
+        m_gameplayPanel.HidePlushiePanel();
+    }
     public void ShowMultiplierPanel()
     {
         m_gameplayPanel.ShowBottomPanel(false);

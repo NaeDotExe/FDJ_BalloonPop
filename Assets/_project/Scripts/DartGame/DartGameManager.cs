@@ -70,6 +70,7 @@ public class DartGameManager : MonoBehaviour
 
     private void OnBalloonExplodedCallback(bool success)
     {
+            m_uiManager.GameplayPanel.OnDartThrown(m_maxBallonsToPop - m_dartsThrown - 1);
         if (success)
         {
             Debug.LogFormat("Darts Thrown: {0} / {1}", m_dartsThrown + 1, m_maxBallonsToPop);
@@ -91,15 +92,13 @@ public class DartGameManager : MonoBehaviour
     }
     private void OnBalloonTouchedCallback(Balloon balloon)
     {
-        m_uiManager.GameplayPanel.OnDartThrown(m_maxBallonsToPop - m_dartsThrown - 1);
-
         m_playerArm.PlayThrowAnimation(balloon.transform);
-        //m_balloonManager.ExplodeBalloon(balloon);
     }
     private void OnMultiplierSelectedCallback(float value)
     {
         m_multiplier = value;
         m_bet *= m_multiplier;
+        m_uiManager.HidePlushiePanel();
 
         if (m_currentLevel+1 >= m_gameData.LevelsCount)
         {
@@ -108,16 +107,7 @@ public class DartGameManager : MonoBehaviour
         else
         {
             m_cameraController.SwitchToDartGameplay();
-
-            // Show "Options" Panel
-            //m_uiManager.SetTexts(m_bet, m_gameData.LevelDatas[m_currentLevel].Chance,
-            //    m_gameData.MultiplierData.GetMinMultiplier(m_currentLevel),
-            //    m_gameData.MultiplierData.GetMaxMultiplier(m_currentLevel));
-
-
-            // go back to gameplay
-            //    StartLevel(m_currentLevel);
-
+            
             // show continue panel
             ShowContinuePanel();
         }
@@ -125,20 +115,7 @@ public class DartGameManager : MonoBehaviour
     private void GameOver(bool success)
     {
         OnGameOver.Invoke(success);
-        // show game over UI, stop input, etc.
-        //if (!success)
-        //{
-        //    SceneManager.LoadScene("SampleScene");
-
-        //}
-        //else
-        //{
-        //    SceneManager.LoadScene("SampleScene");
-        //}
-
         m_uiManager.ShowFailPanel();
-
-        //StartCoroutine(GameOverCoroutine());
     }
 
     private IEnumerator GameOverCoroutine()
@@ -154,8 +131,6 @@ public class DartGameManager : MonoBehaviour
 
         //++m_currentLevel;k
 
-        Debug.LogFormat("Current Level = {0} Max Level  = {1}", m_currentLevel, m_gameData.LevelsCount);
-
         StartMultiplierPhase();
     }
 
@@ -168,11 +143,16 @@ public class DartGameManager : MonoBehaviour
     private void StartMultiplierPhase()
     {
         m_dartInputManager.EnableInput = false;
+        m_playerArm.Show(false);
 
         m_uiManager.ShowSuccessPanel(m_currentLevel + 1, () =>
         {
             if (m_currentLevel + 1 == m_gameData.LevelsCount)
             {
+                // hide balloons and darts
+                m_balloonManager.ShowBalloons(false);
+                m_playerArm.DestroyDarts();
+
                 // mega ballon 
                 m_uiManager.ShowMegaballonPanel();
                 m_megaBalloon.SetActive(true);
@@ -194,6 +174,7 @@ public class DartGameManager : MonoBehaviour
         m_dartsThrown = 0;
         m_maxBallonsToPop = m_gameData.GetBalloonsToPop(m_currentLevel);
         m_cameraController.SwitchToDartGameplay();
+        m_playerArm.Show(true);
 
         // tmp
         m_uiManager.GameplayPanel.OnNewLevelStarted(m_currentLevel + 1, m_maxBallonsToPop);

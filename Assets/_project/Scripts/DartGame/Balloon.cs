@@ -6,6 +6,7 @@ public class Balloon : MonoBehaviour
 {
     #region Attributes
     [SerializeField] private ParticleSystem m_particleSystem;
+    [SerializeField] private GameObject m_number;
     
     private MeshRenderer m_meshRenderer;
     private BoxCollider m_collider;
@@ -68,6 +69,7 @@ public class Balloon : MonoBehaviour
     {
         m_meshRenderer.enabled = enable;
         m_collider.enabled = enable;
+        m_number.SetActive(enable);
 
         m_particleSystem.gameObject.SetActive(enable);
     }

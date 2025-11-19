@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
@@ -43,7 +42,6 @@ public class GameplayPanel : UIPanel
         m_successText.text = string.Format(m_successStr, crtLevel);
         m_successPanel.SetActive(true);
 
-        //m_successPanel.transform.DOScale(0, 0);
         m_successPanel.transform.DOPunchScale(Vector3.one * 1.2f, 0.4f, 2).onComplete += () => StartCoroutine(SuccessCoroutine(callback));
     }
     private IEnumerator SuccessCoroutine(Action callback)
@@ -54,20 +52,18 @@ public class GameplayPanel : UIPanel
     }
     public void ShowPlushiePanel()
     {
-        //StartCoroutine(PlushiePanelCoroutine());
-
         m_plushiePanel.SetActive(true);
-        m_plushiePanel.transform.DOPunchScale(Vector3.one * 1.2f, 0.4f, 2).onComplete += () => StartCoroutine(HidePlushiePanelCoroutine());
+        m_plushiePanel.transform.DOPunchScale(Vector3.one * 1.2f, 0.4f, 2);
     }
-    private IEnumerator HidePlushiePanelCoroutine()
+    public void HidePlushiePanel()
     {
-        yield return new WaitForSeconds(3f);
         m_plushiePanel.SetActive(false);
     }
 
     public void ShowBottomPanel(bool show)
     {
         m_dartHolder.SetActive(show);
+        m_quit.gameObject.SetActive(show);
     }
 
     private IEnumerator FailPanelCoroutine()
@@ -85,8 +81,6 @@ public class GameplayPanel : UIPanel
 
     public void OnNewLevelStarted(int level, int dartsCount)
     {
-        Debug.Log("LEVEL START : " + level + " DARTS COUNT : " + dartsCount);
-
         m_currentLevel.text = string.Format(m_levelString, level);
 
         // set darts count
@@ -98,8 +92,6 @@ public class GameplayPanel : UIPanel
     }
     public void OnDartThrown(int remainingDartCount)
     {
-        Debug.Log("dart remainign " + remainingDartCount);
-
         for (int i = 0; i < m_remainingDarts.Count; ++i)
         {
             if (m_remainingDarts[i].Enabled)

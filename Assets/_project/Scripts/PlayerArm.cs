@@ -1,12 +1,14 @@
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 public class PlayerArm : MonoBehaviour
 {
     #region Attributes
     [SerializeField] private Animator m_animator;
     [SerializeField] private Transform m_parent;
+    [SerializeField] private SkinnedMeshRenderer m_meshRenderer;
 
     [Space]
     [SerializeField] private Transform m_dartOrigin;
@@ -15,7 +17,9 @@ public class PlayerArm : MonoBehaviour
 
     private Vector3 m_crtTarget;
     private Dart m_crtDart;
+    private List<Dart> m_darts = new List<Dart>();
     #endregion
+
 
     public UnityEvent<Balloon> OnThrowComplete = new UnityEvent<Balloon>();
 
@@ -42,8 +46,10 @@ public class PlayerArm : MonoBehaviour
     public void StartThrow()
     {
         // tmp
-        m_crtDart = Instantiate(m_dartPrefab, m_dartOrigin);
+        Dart newDart = Instantiate(m_dartPrefab, m_dartOrigin);
+        m_crtDart = newDart;
         m_crtDart.OnBalloonHit.AddListener(OnThrowComplete.Invoke);
+        m_darts.Add(newDart);
     }
     public void ThrowAnimEnded()
     {
@@ -53,8 +59,19 @@ public class PlayerArm : MonoBehaviour
         Vector3 rot = m_crtDart.transform.eulerAngles;
         m_crtDart.transform.eulerAngles = new Vector3(rot.x, rot.y - 180, rot.z);
 
-
         m_crtDart.AddForce(m_crtTarget, m_throwForce);
+    }
+    public void Show(bool show)
+    {
+        m_meshRenderer .enabled = show;
+    }
+
+    public void DestroyDarts()
+    {
+        foreach (Dart d in m_darts)
+            Destroy(d.gameObject);
+
+        m_darts.Clear();
     }
     #endregion
 }

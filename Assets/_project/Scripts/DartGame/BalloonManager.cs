@@ -65,6 +65,13 @@ public class BalloonManager : MonoBehaviour
         }
     }
 
+    public void ShowBalloons(bool show)
+    {
+        foreach (Balloon b in m_balloons)
+        {
+            b.gameObject.SetActive(true);
+        }
+    }
     private IEnumerator Test()
     {
         yield return new WaitForSeconds(3f);

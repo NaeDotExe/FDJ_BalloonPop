@@ -27,6 +27,16 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: M_emission_blue
+    second: {fileID: 2100000, guid: 8f400b3a83cd955458b0fc03bc3638ef, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_emission_yellow
+    second: {fileID: 2100000, guid: d527f7d5dd39e8140a58b2c30d0443b0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: M_ticket_office
     second: {fileID: 2100000, guid: 5d7d5c1e2859fb747b6a9c34ae864e62, type: 2}
   materials:
