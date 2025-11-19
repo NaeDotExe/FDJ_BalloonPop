@@ -1555,6 +1555,7 @@ MonoBehaviour:
   m_multiplier40: {fileID: 4086822576696160597, guid: fe1f9f4b64f157144b15ac4d744b99e4, type: 3}
   m_multiplierScale: 0.003
   m_multiplierXOffset: 2
+  m_mainCamera: {fileID: 2007306839}
 --- !u!4 &160999310
 Transform:
   m_ObjectHideFlags: 0

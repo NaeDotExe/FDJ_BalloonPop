@@ -24,8 +24,13 @@ public class DartFXPlayer : MonoBehaviour
     [SerializeField] private ParticleSystem m_multiplier4;
     [SerializeField] private ParticleSystem m_multiplier5;
     [SerializeField] private ParticleSystem m_multiplier40;
+
+    [Space]
     [SerializeField] private float m_multiplierScale = 0.6f;
     [SerializeField] private float m_multiplierXOffset = 1f;
+
+    [Space]
+    [SerializeField] private Camera m_mainCamera;
 
     public void PlaySFX(Balloon balloon)
     {
@@ -42,6 +47,9 @@ public class DartFXPlayer : MonoBehaviour
 
     public void ShowMultiplier(float value, Transform tr, bool megaBallon=false)
     {
+        m_multiplierXOffset = 0;
+        Vector3 spawnPos = new Vector3(m_mainCamera.transform.position.x, m_mainCamera.transform.position.y, m_mainCamera.transform.position.z);
+
         ParticleSystem obj;
         float scale = m_multiplierScale;
         if(megaBallon)
@@ -51,7 +59,7 @@ public class DartFXPlayer : MonoBehaviour
 
         if (value == 1.5f)
         {
-            obj = Instantiate(m_multiplier15, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier15, /*new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
             Debug.Log(obj.gameObject.transform.localScale);
@@ -61,7 +69,7 @@ public class DartFXPlayer : MonoBehaviour
         }
         else if (value == 2f)
         {
-            obj = Instantiate(m_multiplier2, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier2, /*new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
 
@@ -72,7 +80,7 @@ public class DartFXPlayer : MonoBehaviour
         }
         else if (value == 3f)
         {
-            obj = Instantiate(m_multiplier3, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier3, /*new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
 
@@ -83,7 +91,7 @@ public class DartFXPlayer : MonoBehaviour
         }
         else if (value == 4f)
         {
-            obj = Instantiate(m_multiplier4, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier4, /*new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
 
@@ -94,7 +102,7 @@ public class DartFXPlayer : MonoBehaviour
         }
         else if (value == 5f)
         {
-            obj = Instantiate(m_multiplier5, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier5, /*new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
 
@@ -105,7 +113,7 @@ public class DartFXPlayer : MonoBehaviour
         }
         else if (value == 40f)
         {
-            obj = Instantiate(m_multiplier40, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
+            obj = Instantiate(m_multiplier40,/* new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z)*/spawnPos, tr.rotation);
             Debug.Log(obj.gameObject.transform.localScale);
             obj.gameObject.transform.localScale *= scale;
 
