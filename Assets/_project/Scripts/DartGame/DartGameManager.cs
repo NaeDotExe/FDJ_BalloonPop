@@ -30,6 +30,7 @@ public class DartGameManager : MonoBehaviour
     private int m_maxBallonsToPop = 0;
 
     private float m_bet = 10;
+    private float m_coins = 0;
     private float m_multiplier = 1f;
     #endregion
 
@@ -66,6 +67,7 @@ public class DartGameManager : MonoBehaviour
         m_balloonManager.InitBalloons(5);
         m_megaBalloon.SetActive(false);
 
+        m_coins = m_bet;
         StartMainMenu();
         //StartLevel(m_currentLevel);
     }
@@ -98,15 +100,13 @@ public class DartGameManager : MonoBehaviour
     private void OnMultiplierSelectedCallback(float value)
     {
         m_multiplier = value;
-        m_bet *= m_multiplier;
+        m_coins *= m_multiplier;
         m_uiManager.HidePlushiePanel();
 
         if (m_currentLevel + 1 >= m_gameData.LevelsCount)
         {
-            //SceneManager.LoadScene("Main");
-
             // Show victory panel if we reach the last level
-            int coins = (int)m_bet;
+            int coins = (int)m_coins;
             m_uiManager.ShowGameOverPanel(coins);
         }
         else
@@ -124,9 +124,13 @@ public class DartGameManager : MonoBehaviour
 
     private IEnumerator GameOverCoroutine(bool success)
     {
+        m_coins = 0;
+
         OnGameOver.Invoke(success);
         yield return new WaitForSeconds(1f);
         m_uiManager.ShowFailPanel();
+        yield return new WaitForSeconds(2f);
+        m_uiManager.ShowGameOverPanel();
     }
     private void LevelComplete()
     {
@@ -184,7 +188,7 @@ public class DartGameManager : MonoBehaviour
 
     private void ShowContinuePanel()
     {
-        m_uiManager.SetTexts(m_bet, m_gameData.LevelDatas[m_currentLevel].Chance,
+        m_uiManager.SetTexts(m_coins, m_gameData.LevelDatas[m_currentLevel].Chance,
 m_gameData.MultiplierData.GetMinMultiplier(m_currentLevel),
 m_gameData.MultiplierData.GetMaxMultiplier(m_currentLevel));
 

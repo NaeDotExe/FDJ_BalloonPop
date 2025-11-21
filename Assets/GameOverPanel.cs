@@ -10,10 +10,14 @@ public class GameOverPanel : UIPanel
     [SerializeField] private GameObject m_coinVfx;
     [SerializeField] private TextMeshProUGUI m_coinText;
 
+    [SerializeField] private TextMeshProUGUI m_title;
+    [SerializeField] private string m_winStr = "Vous avez gagné";
+    [SerializeField] private string m_lossStr = "Vous avez perdu";
+
     public UnityEvent OnQuitInvoked = new UnityEvent();
     public UnityEvent OnRestartInvoked = new UnityEvent();
-    
-    void Start()
+
+    private void Start()
     {
         m_quitButton.onClick.AddListener(OnQuitInvoked.Invoke);
         m_restartButton.onClick.AddListener(OnRestartInvoked.Invoke);
@@ -32,6 +36,11 @@ public class GameOverPanel : UIPanel
 
     public void SetCoinsCount(int coins)
     {
+        if (coins == 0)
+            m_title.text = m_lossStr;
+        else
+            m_title.text = m_winStr;
+
         m_coinText.text = coins.ToString();
     }
 }

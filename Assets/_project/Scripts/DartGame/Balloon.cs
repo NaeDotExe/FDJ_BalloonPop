@@ -54,7 +54,7 @@ public class Balloon : MonoBehaviour
         if (m_isTrapped)
         {
             // test
-            m_meshRenderer.material.color = Color.black;
+            //m_meshRenderer.material.color = Color.black;
         }
     }
 

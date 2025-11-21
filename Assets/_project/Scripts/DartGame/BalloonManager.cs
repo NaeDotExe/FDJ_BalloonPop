@@ -55,8 +55,6 @@ public class BalloonManager : MonoBehaviour
             Debug.LogError("Trapped balloon exploded! Game Over.");
             // Handle game over logic here
             OnBalloonExploded.Invoke(false);
-
-            StartCoroutine(Test());
         }
         else
         {
@@ -71,11 +69,5 @@ public class BalloonManager : MonoBehaviour
         {
             b.gameObject.SetActive(show);
         }
-    }
-    private IEnumerator Test()
-    {
-        yield return new WaitForSeconds(3f);
-
-        SceneManager.LoadScene("Main");
     }
 }

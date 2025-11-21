@@ -609,7 +609,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "BALLOON PI\xC8GE"
+  m_text: "BALLON pi\xE9g\xE9"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 31f80065829993f4d9a2c01690079b55, type: 2}
   m_sharedMaterial: {fileID: -1584645124980296763, guid: 31f80065829993f4d9a2c01690079b55, type: 2}
@@ -642,7 +642,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3492,7 +3492,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -25351,6 +25351,9 @@ MonoBehaviour:
   m_restartButton: {fileID: 1018404405}
   m_coinVfx: {fileID: 1986776823}
   m_coinText: {fileID: 1876998375}
+  m_title: {fileID: 279767118}
+  m_winStr: "Vous avez gagn\xE9"
+  m_lossStr: Vous avez perdu
   OnQuitInvoked:
     m_PersistentCalls:
       m_Calls: []
