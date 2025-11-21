@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class DartGameUIManager : MonoBehaviour
 {
@@ -10,10 +11,13 @@ public class DartGameUIManager : MonoBehaviour
     [SerializeField] private GameplayPanel m_gameplayPanel;
     [SerializeField] private OptionsSubPanel m_optionsSubpanel;
     [SerializeField] private MegaBalloonPanel m_megaballoonPanel;
+    [SerializeField] private GameOverPanel m_gameOverPanel;
 
     public UnityEvent OnMainMenuShown = new UnityEvent();
-    public UnityEvent<bool>  OnGameUIShown = new UnityEvent<bool>();
+    public UnityEvent<bool> OnGameUIShown = new UnityEvent<bool>();
     public UnityEvent OnTutorialShown = new UnityEvent();
+    public UnityEvent OnQuitGameInvoked = new UnityEvent();
+    public UnityEvent OnRestartGameInvoked = new UnityEvent();
 
     // to remove later
     public GameplayPanel GameplayPanel
@@ -25,8 +29,10 @@ public class DartGameUIManager : MonoBehaviour
     {
         m_mainMenu.OnStartInvoked.AddListener(ShowTutorial);
         m_tutorialPanel.OnStartButtonClicked.AddListener(() => ShowGameUI(true));
-        m_optionsSubpanel.OnQuitClicked.AddListener(ShowMainMenu);
+        m_optionsSubpanel.OnQuitClicked.AddListener(/*ShowMainMenu*/()=>SceneManager.LoadScene("Main"));
         m_optionsSubpanel.OnContinueClicked.AddListener(() => ShowGameUI(false));
+        m_gameOverPanel.OnQuitInvoked.AddListener(OnQuitGameInvoked.Invoke);
+        m_gameOverPanel.OnRestartInvoked.AddListener(OnRestartGameInvoked.Invoke);
     }
 
     public void ShowMainMenu()
@@ -35,7 +41,9 @@ public class DartGameUIManager : MonoBehaviour
         m_tutorialPanel.Hide();
         m_gameplayPanel.Hide();
         m_megaballoonPanel.Hide();
-        
+        m_gameOverPanel.Hide();
+
+
         OnMainMenuShown.Invoke();
     }
     public void ShowTutorial()
@@ -44,6 +52,7 @@ public class DartGameUIManager : MonoBehaviour
         m_tutorialPanel.Show();
         m_gameplayPanel.Hide();
         m_megaballoonPanel.Hide();
+        m_gameOverPanel.Hide();
 
         OnTutorialShown.Invoke();
     }
@@ -55,8 +64,21 @@ public class DartGameUIManager : MonoBehaviour
         m_gameplayPanel.Show();
         m_gameplayPanel.ShowBottomPanel(true);
         m_megaballoonPanel.Hide();
+        m_gameOverPanel.Hide();
+
 
         OnGameUIShown.Invoke(fromTutorial);
+    }
+
+    public void ShowGameOverPanel(int coinCount = 0)
+    {
+            m_gameOverPanel.SetCoinsCount(coinCount);
+
+        m_mainMenu.Hide();
+        m_tutorialPanel.Hide();
+        m_gameplayPanel.Hide();
+        m_megaballoonPanel.Hide();
+        m_gameOverPanel.Show();
     }
 
     public void ShowFailPanel()

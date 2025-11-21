@@ -1,15 +1,15 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(MeshRenderer), typeof(BoxCollider))]
+[RequireComponent(typeof(MeshRenderer)/*, typeof(BoxCollider)*/)]
 public class Balloon : MonoBehaviour
 {
     #region Attributes
     [SerializeField] private ParticleSystem m_particleSystem;
     [SerializeField] private GameObject m_number;
-    
+
     private MeshRenderer m_meshRenderer;
-    private BoxCollider m_collider;
+    private MeshCollider m_collider;
 
     private int m_index = -1;
     private bool m_isTrapped = false;
@@ -39,7 +39,7 @@ public class Balloon : MonoBehaviour
             Debug.LogError("MeshRenderer component not found on Balloon GameObject.");
         }
 
-        m_collider = GetComponent<BoxCollider>();
+        m_collider = GetComponent<MeshCollider>();
         if (m_collider == null)
         {
             Debug.LogError("MeshCollider component not found on Balloon GameObject.");

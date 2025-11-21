@@ -14,8 +14,13 @@ public class DartMultiplerManager : MonoBehaviour
     [Space]
     [SerializeField] private DartFXPlayer m_fxPlayer;
 
+    private int m_clicksCount = 0;
+    private int m_clicksRequiredForMegaballoon = 3;
     private float m_multiplier = 0f;
+    private float m_elapsedTime = 0f;
+    private float m_maxTime = 1f;
     private bool m_enableInput = false;
+    private bool m_isTimerRunning = false;
 
     public float Multiplier { get { return m_multiplier; } }
 
@@ -25,6 +30,18 @@ public class DartMultiplerManager : MonoBehaviour
     {
         if (!m_enableInput)
             return;
+
+        if (m_isTimerRunning)
+        {
+            m_elapsedTime += Time.deltaTime;
+
+            if (m_elapsedTime >= m_maxTime)
+            {
+                m_clicksCount = 0;
+                m_elapsedTime = 0f;
+                m_isTimerRunning = false;
+            }
+        }
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -44,11 +61,20 @@ public class DartMultiplerManager : MonoBehaviour
                 {
                     if (hitInfo.collider.tag == "MegaBalloon")
                     {
-                        GameObject balloon = hitInfo.collider.gameObject;
-                        balloon.SetActive(false);
-                        m_fxPlayer.ShowMultiplier(m_multiplier, balloon.transform, true);
+                        m_isTimerRunning = true;
+                        ++m_clicksCount;
+                        if (m_clicksCount >= m_clicksRequiredForMegaballoon && m_elapsedTime < m_maxTime)
+                        {
+                            m_clicksCount = 0;
+                            m_elapsedTime = 0;
+                            m_isTimerRunning = false;
 
-                        EndMuliplierScene(m_multiplier);
+                            GameObject balloon = hitInfo.collider.gameObject;
+                            balloon.SetActive(false);
+                            m_fxPlayer.ShowMultiplier(m_multiplier, balloon.transform, true);
+
+                            EndMuliplierScene(m_multiplier);
+                        }
                     }
                 }
             }

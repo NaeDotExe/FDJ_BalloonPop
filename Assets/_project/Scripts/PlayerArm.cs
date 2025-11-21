@@ -20,7 +20,6 @@ public class PlayerArm : MonoBehaviour
     private List<Dart> m_darts = new List<Dart>();
     #endregion
 
-
     public UnityEvent<Balloon> OnThrowComplete = new UnityEvent<Balloon>();
 
     #region Methods
@@ -35,13 +34,8 @@ public class PlayerArm : MonoBehaviour
     }
     private void LookTowards(Transform target)
     {
-        Vector3 rot = Vector3.zero;
-
-        m_parent.DORotate(rot, 0.5f);
-
-        m_parent.LookAt(target);
+        m_parent.DOLookAt(target.position, 0.4f, AxisConstraint.Y);
     }
-
 
     public void StartThrow()
     {

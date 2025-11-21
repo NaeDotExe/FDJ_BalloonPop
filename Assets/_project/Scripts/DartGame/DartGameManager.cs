@@ -59,6 +59,8 @@ public class DartGameManager : MonoBehaviour
         {
             m_cameraController.SwitchToDartGameplay();
         });
+        m_uiManager.OnQuitGameInvoked.AddListener(QuitGame);
+        m_uiManager.OnRestartGameInvoked.AddListener(RestartGame);
         m_playerArm.OnThrowComplete.AddListener(m_balloonManager.ExplodeBalloon);
 
         m_balloonManager.InitBalloons(5);
@@ -73,7 +75,6 @@ public class DartGameManager : MonoBehaviour
             m_uiManager.GameplayPanel.OnDartThrown(m_maxBallonsToPop - m_dartsThrown - 1);
         if (success)
         {
-            Debug.LogFormat("Darts Thrown: {0} / {1}", m_dartsThrown + 1, m_maxBallonsToPop);
             ++m_dartsThrown;
             if (m_dartsThrown >= m_maxBallonsToPop)
             {
@@ -100,36 +101,36 @@ public class DartGameManager : MonoBehaviour
         m_bet *= m_multiplier;
         m_uiManager.HidePlushiePanel();
 
-        if (m_currentLevel+1 >= m_gameData.LevelsCount)
+        if (m_currentLevel + 1 >= m_gameData.LevelsCount)
         {
-            SceneManager.LoadScene("Main");
+            //SceneManager.LoadScene("Main");
+
+            // Show victory panel if we reach the last level
+            int coins = (int)m_bet;
+            m_uiManager.ShowGameOverPanel(coins);
         }
         else
         {
             m_cameraController.SwitchToDartGameplay();
-            
+
             // show continue panel
             ShowContinuePanel();
         }
     }
     private void GameOver(bool success)
     {
-        OnGameOver.Invoke(success);
-        m_uiManager.ShowFailPanel();
+        StartCoroutine(GameOverCoroutine(success));
     }
 
-    private IEnumerator GameOverCoroutine()
+    private IEnumerator GameOverCoroutine(bool success)
     {
+        OnGameOver.Invoke(success);
         yield return new WaitForSeconds(1f);
-
-        SceneManager.LoadScene("SampleScene");
-
+        m_uiManager.ShowFailPanel();
     }
     private void LevelComplete()
     {
         OnLevelComplete.Invoke();
-
-        //++m_currentLevel;k
 
         StartMultiplierPhase();
     }
@@ -188,5 +189,14 @@ m_gameData.MultiplierData.GetMinMultiplier(m_currentLevel),
 m_gameData.MultiplierData.GetMaxMultiplier(m_currentLevel));
 
         m_uiManager.ShowContinuePanel();
+    }
+
+    public void QuitGame()
+    {
+        // go back to world view
+    }
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("Main");
     }
 }

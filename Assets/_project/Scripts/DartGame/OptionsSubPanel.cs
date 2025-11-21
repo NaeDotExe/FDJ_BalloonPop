@@ -20,6 +20,10 @@ public class OptionsSubPanel : UIPanel
     [SerializeField] private TextMeshProUGUI m_chanceOfWinningText;
     [SerializeField] private TextMeshProUGUI m_minMultiplierText;
     [SerializeField] private TextMeshProUGUI m_maxMultiplierText;
+
+    [Space]
+    [SerializeField] private GameObject m_coin;
+
     #endregion
 
     #region Events
@@ -41,6 +45,8 @@ public class OptionsSubPanel : UIPanel
 
             OnContinueClicked.Invoke();
         });
+
+        m_coin.SetActive(false);
     }
     public void SetTexts(float currentGain, float chanceOfWinning, float minMultiplier, float maxMultiplier)
     {
@@ -49,5 +55,18 @@ public class OptionsSubPanel : UIPanel
         m_chanceOfWinningText.text = string.Format(m_chanceOfWinningString, chanceOfWinning);
         m_minMultiplierText.text = string.Format(m_minMultiplierString, minMultiplier, currentGain * minMultiplier);
         m_maxMultiplierText.text = string.Format(m_maxMultiplierString, maxMultiplier, currentGain * maxMultiplier);
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        m_coin.SetActive(false);
+    }
+    public override void Show()
+    {
+        base.Show();
+
+        m_coin.SetActive(true);
     }
 }

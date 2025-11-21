@@ -11,14 +11,14 @@ public class UIPanel : MonoBehaviour
         m_canvasGroup = GetComponent<CanvasGroup>();
     }
     
-    public void Show()
+    public virtual void Show()
     {
         m_canvasGroup.alpha = 1f;
         m_canvasGroup.interactable = true;
         m_canvasGroup.blocksRaycasts = true;
         //gameObject.SetActive(true);
     }
-    public void Hide()
+    public virtual void Hide()
     {
         m_canvasGroup.alpha = 0f;
         m_canvasGroup.interactable = false;

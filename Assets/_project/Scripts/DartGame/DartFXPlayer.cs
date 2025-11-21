@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,6 +28,9 @@ public class DartFXPlayer : MonoBehaviour
     [SerializeField] private float m_multiplierScale = 0.6f;
     [SerializeField] private float m_multiplierXOffset = 1f;
 
+    [Space]
+    [SerializeField] private Camera m_cam;
+
     public void PlaySFX(Balloon balloon)
     {
         Vector3 pos = balloon.IsTrapped ? new Vector3(balloon.transform.position.x, balloon.transform.position.y, balloon.transform.position.z + m_zOffset) :
@@ -44,72 +48,59 @@ public class DartFXPlayer : MonoBehaviour
     {
         ParticleSystem obj;
         float scale = m_multiplierScale;
-        if(megaBallon)
+        Vector3 pos = megaBallon ? new Vector3(m_cam.transform.position.x, m_cam.transform.position.y,0) :
+            new Vector3(m_cam.transform.position.x + m_multiplierXOffset, m_cam.transform.position.y, m_cam.transform.position.z);
+        Quaternion rot = Quaternion.identity;
+
+        if (megaBallon)
         {
             scale *= 10f;
         }
 
         if (value == 1.5f)
         {
-            obj = Instantiate(m_multiplier15, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier15, pos, rot);
             obj.gameObject.transform.localScale *= scale;
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));
         }
         else if (value == 2f)
         {
-            obj = Instantiate(m_multiplier2, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier2,pos, rot);
             obj.gameObject.transform.localScale *= scale;
-
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));
         }
         else if (value == 3f)
         {
-            obj = Instantiate(m_multiplier3, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier3, pos, rot);
             obj.gameObject.transform.localScale *= scale;
-
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));
         }
         else if (value == 4f)
         {
-            obj = Instantiate(m_multiplier4, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier4, pos, rot);
             obj.gameObject.transform.localScale *= scale;
-
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));
         }
         else if (value == 5f)
         {
-            obj = Instantiate(m_multiplier5, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier5,pos, rot);
             obj.gameObject.transform.localScale *= scale;
-
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));
         }
         else if (value == 40f)
         {
-            obj = Instantiate(m_multiplier40, new Vector3(tr.position.x + m_multiplierXOffset, tr.position.y, tr.position.z), tr.rotation);
-            Debug.Log(obj.gameObject.transform.localScale);
+            obj = Instantiate(m_multiplier40, pos, rot);
             obj.gameObject.transform.localScale *= scale;
-
-            Debug.Log(obj.gameObject.transform.localScale);
 
             obj.Play();
             StartCoroutine(LifeCycleCoroutine(obj.gameObject));

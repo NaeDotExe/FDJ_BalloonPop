@@ -69,7 +69,7 @@ public class BalloonManager : MonoBehaviour
     {
         foreach (Balloon b in m_balloons)
         {
-            b.gameObject.SetActive(true);
+            b.gameObject.SetActive(show);
         }
     }
     private IEnumerator Test()
