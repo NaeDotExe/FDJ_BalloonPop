@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 namespace BalloonPop
 {
-
     public class PlayerArm : MonoBehaviour
     {
         #region Attributes
@@ -23,7 +22,9 @@ namespace BalloonPop
         private List<Dart> m_darts = new List<Dart>();
         #endregion
 
+        #region Events
         public UnityEvent<Balloon> OnThrowComplete = new UnityEvent<Balloon>();
+        #endregion
 
         #region Methods
         public void PlayThrowAnimation(Transform target)

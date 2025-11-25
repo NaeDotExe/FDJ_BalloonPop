@@ -144,6 +144,7 @@ namespace BalloonPop
 
         private void StartMainMenu()
         {
+            m_playerArm.Show(false);
             m_cameraController.SwitchToMainMenu();
             m_uiManager.ShowMainMenu();
         }
