@@ -1,0 +1,12 @@
+{
+  "name": "BalloonPop.Runtime",
+  "references": [
+    "UnityEngine",
+    "Unity.InputSystem",
+    "Unity.Cinemachine",
+	  "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false
+}

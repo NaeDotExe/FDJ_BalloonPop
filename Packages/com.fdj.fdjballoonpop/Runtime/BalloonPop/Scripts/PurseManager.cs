@@ -1,17 +1,22 @@
 using UnityEngine;
 
-public class PurseManager : MonoBehaviour
+namespace BalloonPop
 {
-    // tmp
-    private int m_coins = 0;
 
-    public int Coins
+    public class PurseManager : MonoBehaviour
     {
-        get { return m_coins; }
+        // tmp
+        private int m_coins = 0;
+
+        public int Coins
+        {
+            get { return m_coins; }
+        }
+
+        public void AddCoins(int amount)
+        {
+            m_coins += amount;
+        }
     }
 
-    public void AddCoins(int amount)
-    {
-        m_coins += amount;
-    }
 }

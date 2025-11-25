@@ -1,17 +1,22 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(BoxCollider))]
-public class DartCollider : MonoBehaviour
+namespace BalloonPop
 {
-    #region Events
-    public UnityEvent<Collider> CollisionEnter = new UnityEvent<Collider>();
-    #endregion
 
-    private void OnTriggerEnter(Collider collider)
+    [RequireComponent(typeof(BoxCollider))]
+    public class DartCollider : MonoBehaviour
     {
-        Debug.Log("dart collision");
+        #region Events
+        public UnityEvent<Collider> CollisionEnter = new UnityEvent<Collider>();
+        #endregion
 
-        CollisionEnter.Invoke(collider);
+        private void OnTriggerEnter(Collider collider)
+        {
+            Debug.Log("dart collision");
+
+            CollisionEnter.Invoke(collider);
+        }
     }
+
 }

@@ -10,7 +10,8 @@
         "com.unity.render-pipelines.universal": "17.0.4",
         "com.unity.ugui": "2.0.0",
         "com.unity.timeline": "1.8.9",
-        "com.unity.visualscripting": "1.9.7"
+        "com.unity.visualscripting": "1.9.7",
+        "com.unity.textmeshpro": "3.0.6"
       }
     },
     "com.unity.ai.navigation": {
@@ -213,6 +214,14 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
+    },
+    "com.unity.textmeshpro": {
+      "version": "5.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.ugui": "2.0.0"
+      }
     },
     "com.unity.timeline": {
       "version": "1.8.9",

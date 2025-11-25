@@ -1,51 +1,56 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-/// <summary>
-/// Detects where the player clicks/taps and throws a dart towards that position.
-/// </summary>
-public class DartInputManager : MonoBehaviour
+namespace BalloonPop
 {
-    #region Attributes
-    [SerializeField] private Camera m_main;
-    [SerializeField] private LayerMask m_balloonLayerMask;
 
-    private bool _enableInput = false;
-    private Balloon m_lastTouchedBalloon = null;
-    #endregion
-
-    public bool EnableInput
+    /// <summary>
+    /// Detects where the player clicks/taps and throws a dart towards that position.
+    /// </summary>
+    public class DartInputManager : MonoBehaviour
     {
-        get { return _enableInput; }
-        set { _enableInput = value; }
-    }
+        #region Attributes
+        [SerializeField] private Camera m_main;
+        [SerializeField] private LayerMask m_balloonLayerMask;
 
-    public Balloon LastTouchedBalloon
-    {
-        get { return m_lastTouchedBalloon; }
-    }
+        private bool _enableInput = false;
+        private Balloon m_lastTouchedBalloon = null;
+        #endregion
 
-    public UnityEvent<Balloon> OnBalloonTouched = new UnityEvent<Balloon>();
-
-    #region Methods
-    private void Update()
-    {
-        if (!_enableInput) 
-            return;
-
-        if (Input.GetMouseButtonDown(0))
+        public bool EnableInput
         {
-            Ray ray = m_main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, m_balloonLayerMask))
+            get { return _enableInput; }
+            set { _enableInput = value; }
+        }
+
+        public Balloon LastTouchedBalloon
+        {
+            get { return m_lastTouchedBalloon; }
+        }
+
+        public UnityEvent<Balloon> OnBalloonTouched = new UnityEvent<Balloon>();
+
+        #region Methods
+        private void Update()
+        {
+            if (!_enableInput)
+                return;
+
+            if (Input.GetMouseButtonDown(0))
             {
-                Balloon balloon = hitInfo.collider.GetComponent<Balloon>();
-                if (balloon != null)
+                Ray ray = m_main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out RaycastHit hitInfo, Mathf.Infinity, m_balloonLayerMask))
                 {
-                    _enableInput = false;
-                    OnBalloonTouched.Invoke(balloon);
+                    Balloon balloon = hitInfo.collider.GetComponent<Balloon>();
+                    if (balloon != null)
+                    {
+                        _enableInput = false;
+                        OnBalloonTouched.Invoke(balloon);
+                    }
                 }
             }
         }
+        #endregion
     }
-    #endregion
+
 }

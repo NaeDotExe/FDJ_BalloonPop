@@ -4,6 +4,9 @@ using UnityEngine.Events;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
+namespace BalloonPop
+{
+
 public class DartGameUIManager : MonoBehaviour
 {
     [SerializeField] private MainMenu m_mainMenu;
@@ -115,4 +118,6 @@ public class DartGameUIManager : MonoBehaviour
     {
         m_optionsSubpanel.SetTexts(currentGain, chanceOfWinning, minMultiplier, maxMultiplier);
     }
+}
+
 }

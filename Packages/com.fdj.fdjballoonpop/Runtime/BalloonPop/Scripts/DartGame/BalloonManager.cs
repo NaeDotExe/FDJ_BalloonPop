@@ -4,70 +4,73 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-public class BalloonManager : MonoBehaviour
+namespace BalloonPop
 {
-    [SerializeField] private List<Balloon> m_balloons = new List<Balloon>();
-
-    [Space]
-    [SerializeField]private DartFXPlayer m_dartFXPlayer;
-
-    private int m_trappedBalloons = 5;
-    private int m_activeBalloons = 30;
-
-    public UnityEvent<bool> OnBalloonExploded = new UnityEvent<bool>();
-
-    public void InitBalloons(int trappedCount)
+    public class BalloonManager : MonoBehaviour
     {
-        m_activeBalloons = m_balloons.Count;
+        [SerializeField] private List<Balloon> m_balloons = new List<Balloon>();
 
-        int totalCount = m_activeBalloons;
-        int remainingToPick = trappedCount;
+        [Space]
+        [SerializeField] private DartFXPlayer m_dartFXPlayer;
 
-        // randomly assign trapped balloons
-        for (int i = 0; i < m_balloons.Count; i++)
+        private int m_trappedBalloons = 5;
+        private int m_activeBalloons = 30;
+
+        public UnityEvent<bool> OnBalloonExploded = new UnityEvent<bool>();
+
+        public void InitBalloons(int trappedCount)
         {
-            bool isTrapped = false;
-            int remainingItems = totalCount - i;
+            m_activeBalloons = m_balloons.Count;
 
-            if (remainingToPick > 0)
+            int totalCount = m_activeBalloons;
+            int remainingToPick = trappedCount;
+
+            // randomly assign trapped balloons
+            for (int i = 0; i < m_balloons.Count; i++)
             {
-                float probability = (float)remainingToPick / (float)remainingItems;
-                if (Random.value < probability)
+                bool isTrapped = false;
+                int remainingItems = totalCount - i;
+
+                if (remainingToPick > 0)
                 {
-                    isTrapped = true;
-                    remainingToPick--;
+                    float probability = (float)remainingToPick / (float)remainingItems;
+                    if (Random.value < probability)
+                    {
+                        isTrapped = true;
+                        remainingToPick--;
+                    }
                 }
+
+                // set balloon index and trapped status
+                m_balloons[i].Init(i, isTrapped);
             }
-
-            // set balloon index and trapped status
-            m_balloons[i].Init(i, isTrapped);
         }
-    }
 
-    public void ExplodeBalloon(Balloon balloon)
-    {
-        // hides balloon and plays explosion effect
-        balloon.Explode();
-        m_dartFXPlayer.PlaySFX(balloon);
-
-        if (balloon.IsTrapped)
+        public void ExplodeBalloon(Balloon balloon)
         {
-            Debug.LogError("Trapped balloon exploded! Game Over.");
-            // Handle game over logic here
-            OnBalloonExploded.Invoke(false);
+            // hides balloon and plays explosion effect
+            balloon.Explode();
+            m_dartFXPlayer.PlaySFX(balloon);
+
+            if (balloon.IsTrapped)
+            {
+                Debug.LogError("Trapped balloon exploded! Game Over.");
+                // Handle game over logic here
+                OnBalloonExploded.Invoke(false);
+            }
+            else
+            {
+                OnBalloonExploded.Invoke(true);
+                m_activeBalloons--;
+            }
         }
-        else
-        {
-            OnBalloonExploded.Invoke(true);
-            m_activeBalloons--;
-        }
-    }
 
-    public void ShowBalloons(bool show)
-    {
-        foreach (Balloon b in m_balloons)
+        public void ShowBalloons(bool show)
         {
-            b.gameObject.SetActive(show);
+            foreach (Balloon b in m_balloons)
+            {
+                b.gameObject.SetActive(show);
+            }
         }
     }
 }

@@ -3,19 +3,24 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class TutorialPanel : UIPanel
+namespace BalloonPop
 {
-    [SerializeField] private Button m_startButton;
-    [SerializeField] private Button m_scrollButton;
 
-    public UnityEvent OnStartButtonClicked = new UnityEvent();
-    private void Start()
+    public class TutorialPanel : UIPanel
     {
-        m_startButton.onClick.AddListener(StartButtonClicked);
+        [SerializeField] private Button m_startButton;
+        [SerializeField] private Button m_scrollButton;
+
+        public UnityEvent OnStartButtonClicked = new UnityEvent();
+        private void Start()
+        {
+            m_startButton.onClick.AddListener(StartButtonClicked);
+        }
+
+        private void StartButtonClicked()
+        {
+            OnStartButtonClicked.Invoke();
+        }
     }
 
-    private void StartButtonClicked()
-    {
-        OnStartButtonClicked.Invoke();
-    }
 }

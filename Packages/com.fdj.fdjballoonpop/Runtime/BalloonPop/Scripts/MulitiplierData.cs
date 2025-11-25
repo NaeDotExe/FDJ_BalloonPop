@@ -17,99 +17,104 @@ Level 1 :
     - Multiplier 3 : Probability 38.38% , Value 3
  */
 
-[CreateAssetMenu(fileName = "MultiplierData", menuName = "Data/MultiplierData")]
-public class MultiplierData : ScriptableObject
+namespace BalloonPop
 {
-    // Contains all levels data
-    [SerializeField]
-    private List<MultiplierLevelData> m_levels = new List<MultiplierLevelData>();
 
-    public List<MultiplierLevelData> Levels
+    [CreateAssetMenu(fileName = "MultiplierData", menuName = "Data/MultiplierData")]
+    public class MultiplierData : ScriptableObject
     {
-        get { return m_levels; }
-    }
+        // Contains all levels data
+        [SerializeField]
+        private List<MultiplierLevelData> m_levels = new List<MultiplierLevelData>();
 
-    public float GetRandomMultiplier(int levelIndex)
-    {
-        float value = 1.0f;
-        MultiplierLevelData crtLevel = m_levels[levelIndex];
-
-        // select path
-        MultiplierPathData pathId = crtLevel.GetRandomPath();
-
-        // select multiplier
-        value = pathId.GetRandomMultiplier();
-
-        return value;
-    }
-    public float GetMinMultiplier(int levelIndex)
-    {
-        MultiplierLevelData crtLevel = m_levels[levelIndex];
-        return crtLevel.PathDatas[0].Multipliers[0].Value;
-    }
-    public float GetMaxMultiplier(int levelIndex)
-    {
-        MultiplierLevelData crtLevel = m_levels[levelIndex];
-        return crtLevel.PathDatas[0].Multipliers[crtLevel.PathDatas[0].Multipliers.Count - 1].Value;
-    }
-}
-
-// A level contains a list of paths
-[Serializable]
-public class MultiplierLevelData
-{
-    [SerializeField]
-    private List<MultiplierPathData> m_pathData = new List<MultiplierPathData>();
-
-    public List<MultiplierPathData> PathDatas
-    {
-        get { return m_pathData; }
-    }
-
-    public MultiplierPathData GetRandomPath()
-    {
-        float rand = UnityEngine.Random.Range(0.0f, 100.0f);
-        float cumulativeProbability = 0.0f;
-        foreach (var pathData in m_pathData)
+        public List<MultiplierLevelData> Levels
         {
-            cumulativeProbability += pathData.Probability;
-            if (rand <= cumulativeProbability)
-            {
-                return pathData;
-            }
+            get { return m_levels; }
         }
-        // Fallback in case of rounding errors
-        return m_pathData[m_pathData.Count - 1];
-    }
-}
 
-// A path contains a probability and a list of multipliers
-[Serializable]
-public class MultiplierPathData
-{
+        public float GetRandomMultiplier(int levelIndex)
+        {
+            float value = 1.0f;
+            MultiplierLevelData crtLevel = m_levels[levelIndex];
+
+            // select path
+            MultiplierPathData pathId = crtLevel.GetRandomPath();
+
+            // select multiplier
+            value = pathId.GetRandomMultiplier();
+
+            return value;
+        }
+        public float GetMinMultiplier(int levelIndex)
+        {
+            MultiplierLevelData crtLevel = m_levels[levelIndex];
+            return crtLevel.PathDatas[0].Multipliers[0].Value;
+        }
+        public float GetMaxMultiplier(int levelIndex)
+        {
+            MultiplierLevelData crtLevel = m_levels[levelIndex];
+            return crtLevel.PathDatas[0].Multipliers[crtLevel.PathDatas[0].Multipliers.Count - 1].Value;
+        }
+    }
+
+    // A level contains a list of paths
     [Serializable]
-    public class MultiplierSubData
+    public class MultiplierLevelData
     {
-        public float Probability;
-        public float Value;
-    }
+        [SerializeField]
+        private List<MultiplierPathData> m_pathData = new List<MultiplierPathData>();
 
-    public float Probability;
-    public List<MultiplierSubData> Multipliers = new List<MultiplierSubData>();
-
-    public float GetRandomMultiplier()
-    {
-        float rand = UnityEngine.Random.Range(0.0f, 100.0f);
-        float cumulativeProbability = 0.0f;
-        foreach (var subData in Multipliers)
+        public List<MultiplierPathData> PathDatas
         {
-            cumulativeProbability += subData.Probability;
-            if (rand <= cumulativeProbability)
-            {
-                return subData.Value;
-            }
+            get { return m_pathData; }
         }
-        // Fallback in case of rounding errors
-        return Multipliers[Multipliers.Count - 1].Value;
+
+        public MultiplierPathData GetRandomPath()
+        {
+            float rand = UnityEngine.Random.Range(0.0f, 100.0f);
+            float cumulativeProbability = 0.0f;
+            foreach (var pathData in m_pathData)
+            {
+                cumulativeProbability += pathData.Probability;
+                if (rand <= cumulativeProbability)
+                {
+                    return pathData;
+                }
+            }
+            // Fallback in case of rounding errors
+            return m_pathData[m_pathData.Count - 1];
+        }
     }
+
+    // A path contains a probability and a list of multipliers
+    [Serializable]
+    public class MultiplierPathData
+    {
+        [Serializable]
+        public class MultiplierSubData
+        {
+            public float Probability;
+            public float Value;
+        }
+
+        public float Probability;
+        public List<MultiplierSubData> Multipliers = new List<MultiplierSubData>();
+
+        public float GetRandomMultiplier()
+        {
+            float rand = UnityEngine.Random.Range(0.0f, 100.0f);
+            float cumulativeProbability = 0.0f;
+            foreach (var subData in Multipliers)
+            {
+                cumulativeProbability += subData.Probability;
+                if (rand <= cumulativeProbability)
+                {
+                    return subData.Value;
+                }
+            }
+            // Fallback in case of rounding errors
+            return Multipliers[Multipliers.Count - 1].Value;
+        }
+    }
+
 }

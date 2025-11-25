@@ -1,37 +1,42 @@
 using DG.Tweening;
 using UnityEngine;
 
-public class Plushie : MonoBehaviour
+namespace BalloonPop
 {
-    private MeshRenderer m_meshRenderer;
-    private MeshCollider m_collider;
 
-    private void Awake()
+    public class Plushie : MonoBehaviour
     {
-        if (m_collider == null)
-            m_collider = GetComponent<MeshCollider>();
-        if (m_meshRenderer == null)
-            m_meshRenderer = GetComponent<MeshRenderer>();
-    }
+        private MeshRenderer m_meshRenderer;
+        private MeshCollider m_collider;
 
-    public void Enable(bool enable)
-    {
-        if (enable)
+        private void Awake()
         {
-            gameObject.SetActive(true);
-
+            if (m_collider == null)
+                m_collider = GetComponent<MeshCollider>();
+            if (m_meshRenderer == null)
+                m_meshRenderer = GetComponent<MeshRenderer>();
         }
-        else
-            OnDisablePlushie();
+
+        public void Enable(bool enable)
+        {
+            if (enable)
+            {
+                gameObject.SetActive(true);
+
+            }
+            else
+                OnDisablePlushie();
+        }
+
+        private void OnDisablePlushie()
+        {
+            //transform.DOScale(transform.localScale * 1.1f, 1f).OnComplete(() =>
+            //{
+            //    gameObject.SetActive(false);
+            //});
+
+            transform.DOScale(Vector3.zero, 0.5f).OnComplete(() => gameObject.SetActive(false));
+        }
     }
 
-    private void OnDisablePlushie()
-    {
-        //transform.DOScale(transform.localScale * 1.1f, 1f).OnComplete(() =>
-        //{
-        //    gameObject.SetActive(false);
-        //});
-
-        transform.DOScale(Vector3.zero , 0.5f).OnComplete(() => gameObject.SetActive(false));
-    }
 }

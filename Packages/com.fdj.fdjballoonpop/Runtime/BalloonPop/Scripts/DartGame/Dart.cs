@@ -3,68 +3,73 @@ using System.Security.Cryptography;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Rigidbody))]
-public class Dart : MonoBehaviour
+namespace BalloonPop
 {
-    [SerializeField] private DartCollider m_dartCollider;
 
-    private Rigidbody m_rigidBody;
-
-    public UnityEvent<Balloon> OnBalloonHit = new UnityEvent<Balloon>();
-
-    private void Awake()
+    [RequireComponent(typeof(Rigidbody))]
+    public class Dart : MonoBehaviour
     {
-        m_rigidBody = GetComponent<Rigidbody>();
-    }
-    private void Start()
-    {
-        if (m_dartCollider != null)
-            m_dartCollider.CollisionEnter.AddListener(CollisionCallback);
-    }
+        [SerializeField] private DartCollider m_dartCollider;
 
-    public void AddForce(Vector3 target, float force)
-    {
-        Debug.Log("Dart AddForce to " + target.ToString());
+        private Rigidbody m_rigidBody;
 
-        //transform.DOMove(target, 0.2f).SetEase(Ease.Linear);
+        public UnityEvent<Balloon> OnBalloonHit = new UnityEvent<Balloon>();
 
-         m_rigidBody.AddForce((target - transform.position).normalized * force, ForceMode.VelocityChange);
-    }
-    private void CollisionCallback(Collider collision)
-    {
-        Debug.Log("yes");
-
-        if (collision.gameObject.tag == "Balloon")
+        private void Awake()
         {
+            m_rigidBody = GetComponent<Rigidbody>();
+        }
+        private void Start()
+        {
+            if (m_dartCollider != null)
+                m_dartCollider.CollisionEnter.AddListener(CollisionCallback);
+        }
 
+        public void AddForce(Vector3 target, float force)
+        {
+            Debug.Log("Dart AddForce to " + target.ToString());
 
-            Balloon balloon = collision.gameObject.GetComponent<Balloon>();
-            if (balloon == null)
+            //transform.DOMove(target, 0.2f).SetEase(Ease.Linear);
+
+            m_rigidBody.AddForce((target - transform.position).normalized * force, ForceMode.VelocityChange);
+        }
+        private void CollisionCallback(Collider collision)
+        {
+            Debug.Log("yes");
+
+            if (collision.gameObject.tag == "Balloon")
             {
-                Debug.LogError("Balloon component not found on collided GameObject.");
-                return;
+
+
+                Balloon balloon = collision.gameObject.GetComponent<Balloon>();
+                if (balloon == null)
+                {
+                    Debug.LogError("Balloon component not found on collided GameObject.");
+                    return;
+                }
+                StickToBalloon(collision);
+
+
+                OnBalloonHit.Invoke(balloon);
             }
-            StickToBalloon(collision);
-
-
-            OnBalloonHit.Invoke(balloon);
         }
-    }
 
-    private void StickToBalloon(Collider collision)
-    {
-        Debug.Log("stick to balloon");
-
-        m_rigidBody.linearVelocity = Vector3.zero;
-        m_rigidBody.isKinematic = true;
-
-        //if (collision.contactCount > 0)
+        private void StickToBalloon(Collider collision)
         {
-            //ContactPoint contact = collision.GetContact(0);
-            transform.position = collision.gameObject.transform.position; //contact.point;
-            //transform.rotation = Quaternion.LookRotation(-contact.normal);
-        }
+            Debug.Log("stick to balloon");
 
-        transform.SetParent(collision.transform, true);
+            m_rigidBody.linearVelocity = Vector3.zero;
+            m_rigidBody.isKinematic = true;
+
+            //if (collision.contactCount > 0)
+            {
+                //ContactPoint contact = collision.GetContact(0);
+                transform.position = collision.gameObject.transform.position; //contact.point;
+                                                                              //transform.rotation = Quaternion.LookRotation(-contact.normal);
+            }
+
+            transform.SetParent(collision.transform, true);
+        }
     }
+
 }

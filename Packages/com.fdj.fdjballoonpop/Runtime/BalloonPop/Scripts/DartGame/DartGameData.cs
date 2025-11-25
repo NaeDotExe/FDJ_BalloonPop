@@ -1,39 +1,42 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-[CreateAssetMenu(fileName = "DartGameData", menuName = "Scriptable Objects/DartGameData")]
-public class DartGameData : ScriptableObject
+namespace BalloonPop
 {
-    public List<DartLevelData> LevelDatas;
-    public MultiplierData MultiplierData;
-
-    public int LevelsCount
+    [CreateAssetMenu(fileName = "DartGameData", menuName = "Scriptable Objects/DartGameData")]
+    public class DartGameData : ScriptableObject
     {
-        get { return LevelDatas.Count; }
-    }
+        public List<DartLevelData> LevelDatas;
+        public MultiplierData MultiplierData;
 
-    public int GetBalloonsToPop(int level)
-    {
-        if (level < 0 || level >= LevelDatas.Count)
+        public int LevelsCount
         {
-            Debug.LogError("Invalid level index");
-            return 0;
+            get { return LevelDatas.Count; }
         }
-        return LevelDatas[level].BalloonsToPop;
-    }
 
-    public float GetRandomMultiplier(int levelIndex)
-    {
-        return MultiplierData.GetRandomMultiplier(levelIndex);
-    }
+        public int GetBalloonsToPop(int level)
+        {
+            if (level < 0 || level >= LevelDatas.Count)
+            {
+                Debug.LogError("Invalid level index");
+                return 0;
+            }
+            return LevelDatas[level].BalloonsToPop;
+        }
 
-    public float GetMinMultiplier(int levelIndex)
-    {
-        return MultiplierData.GetMinMultiplier(levelIndex);
-    }
-    public float GetMaxMultiplier(int levelIndex)
-    {
-        return MultiplierData.GetMaxMultiplier(levelIndex);
-    }
+        public float GetRandomMultiplier(int levelIndex)
+        {
+            return MultiplierData.GetRandomMultiplier(levelIndex);
+        }
 
+        public float GetMinMultiplier(int levelIndex)
+        {
+            return MultiplierData.GetMinMultiplier(levelIndex);
+        }
+        public float GetMaxMultiplier(int levelIndex)
+        {
+            return MultiplierData.GetMaxMultiplier(levelIndex);
+        }
+
+    }
 }
