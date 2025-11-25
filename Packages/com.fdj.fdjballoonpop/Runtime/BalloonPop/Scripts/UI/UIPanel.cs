@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace BalloonPop
 {
-
     [RequireComponent(typeof(CanvasGroup))]
     public class UIPanel : MonoBehaviour
     {

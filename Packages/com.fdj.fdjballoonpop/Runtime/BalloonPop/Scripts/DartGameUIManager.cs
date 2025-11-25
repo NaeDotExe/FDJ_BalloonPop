@@ -13,7 +13,7 @@ public class DartGameUIManager : MonoBehaviour
     [SerializeField] private TutorialPanel m_tutorialPanel;
     [SerializeField] private GameplayPanel m_gameplayPanel;
     [SerializeField] private OptionsSubPanel m_optionsSubpanel;
-    [SerializeField] private MegaBalloonPanel m_megaballoonPanel;
+    [SerializeField] private UIPanel m_megaballoonPanel;
     [SerializeField] private GameOverPanel m_gameOverPanel;
 
     public UnityEvent OnMainMenuShown = new UnityEvent();

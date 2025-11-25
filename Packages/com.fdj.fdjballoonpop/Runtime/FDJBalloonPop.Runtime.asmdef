@@ -4,6 +4,7 @@
     "UnityEngine",
     "Unity.InputSystem",
     "Unity.Cinemachine",
+	"BalloonPop",
 	  "Unity.TextMeshPro"
   ],
   "includePlatforms": [],

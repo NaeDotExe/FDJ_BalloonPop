@@ -5709,8 +5709,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438807697}
-  - component: {fileID: 438807698}
   - component: {fileID: 438807699}
+  - component: {fileID: 438807700}
   m_Layer: 5
   m_Name: 4_MegaBalloon
   m_TagString: Untagged
@@ -5738,18 +5738,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &438807698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 438807696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c233d52dec8e1f4aa7c5886d89ada56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!225 &438807699
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5762,6 +5750,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &438807700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438807696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a407d61045fcb564aadc17a6a4ea1879, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &441368500
 GameObject:
   m_ObjectHideFlags: 0
@@ -9495,7 +9495,7 @@ MonoBehaviour:
   m_tutorialPanel: {fileID: 1863625370}
   m_gameplayPanel: {fileID: 247023875}
   m_optionsSubpanel: {fileID: 1947695714}
-  m_megaballoonPanel: {fileID: 438807698}
+  m_megaballoonPanel: {fileID: 438807700}
   m_gameOverPanel: {fileID: 1578444929}
   OnMainMenuShown:
     m_PersistentCalls:
