@@ -41767,7 +41767,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4065417264730032537
 Transform:
   m_ObjectHideFlags: 0
@@ -47541,6 +47541,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5805871865942185662}
     m_Modifications:
+    - target: {fileID: 545719757402588577, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 848536255565620810, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2769756246404269284, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2804679102288849833, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
       propertyPath: m_Name
       value: Cameras | Lights
@@ -47583,6 +47595,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3887271726852769216, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9063387075590439681, guid: 77fc5920bb0f6bd48930655a7df833ab, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
