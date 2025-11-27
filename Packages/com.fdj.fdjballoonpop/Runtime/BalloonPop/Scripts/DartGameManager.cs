@@ -40,6 +40,9 @@ namespace BalloonPop
         #region Events
         private UnityEvent OnLevelComplete = new UnityEvent();
         private UnityEvent<bool> OnGameOver = new UnityEvent<bool>();
+
+        public UnityEvent RestartGameRequest = new UnityEvent();
+        public UnityEvent QuitGameRequest = new UnityEvent();
         #endregion
 
         #region Methods
@@ -202,10 +205,12 @@ namespace BalloonPop
         public void QuitGame()
         {
             // go back to world view
+            QuitGameRequest.Invoke();
         }
         public void RestartGame()
         {
-            SceneManager.LoadScene("Main");
+            RestartGameRequest.Invoke();
+            //SceneManager.LoadScene("Main");
         }
     }
 }

@@ -32,7 +32,7 @@ public class DartGameUIManager : MonoBehaviour
     {
         m_mainMenu.OnStartInvoked.AddListener(ShowTutorial);
         m_tutorialPanel.OnStartButtonClicked.AddListener(() => ShowGameUI(true));
-        m_optionsSubpanel.OnQuitClicked.AddListener(/*ShowMainMenu*/()=>SceneManager.LoadScene("Main"));
+            m_optionsSubpanel.OnQuitClicked.AddListener(/*ShowMainMenu*//*()=>SceneManager.LoadScene("Main")*/FindFirstObjectByType<DartGameManager>().QuitGame ); 
         m_optionsSubpanel.OnContinueClicked.AddListener(() => ShowGameUI(false));
         m_gameOverPanel.OnQuitInvoked.AddListener(OnQuitGameInvoked.Invoke);
         m_gameOverPanel.OnRestartInvoked.AddListener(OnRestartGameInvoked.Invoke);
